@@ -1,7 +1,16 @@
 import java.util.*;
 import Owner.*;
+import java.util.*;
+
 
 public class Main {
+    private String username;
+    private String password;
+    private static Main main = new Main();
+    public void setUser(String user){username= user;}
+    public void setPassword(String pass){password =pass;}
+    public String getPassword(){return password;}
+    public  String getUsername(){return username;}
     private ArrayList<Owner> owners;
     public static void confirmPassword(String password){
         Scanner scan = new Scanner(System.in);
@@ -19,9 +28,12 @@ public class Main {
 
         System.out.print("Please enter your username: ");
         String username = scan.nextLine();
+        main.setUser(username);
+
 
         System.out.print("\nPlease enter your password: ");
         String password = scan.nextLine();
+        main.setPassword(password);
 
         System.out.print("\n");
     }
@@ -71,50 +83,70 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Owner> owners= new ArrayList<Owner>();
         System.out.println("\n**************  welcome to sacanati project **************");
-        System.out.print("\n Please choose and press the type of login: \n 1)admin 2)owner 3)tenant " +
-                "4)register as new tenant 5)register as an owner : ");
-        int logTypeNum=0;
-        boolean flag=false;
-
-        while(!flag){
-            try {
-
-                logTypeNum = scanner.nextInt();
-
-                if (logTypeNum > 0 && logTypeNum < 6)
-                    flag = true;
-                else
-                    System.out.print("the number shouldn't exceed this range (1-5) please try again: ");
 
 
-            } catch (Exception exp) {
-                System.out.print("Please enter only a number from one to 5: ");
-                scanner.next();
+        while(true) {
+            System.out.print("\n Please choose and press the type of login: \n 1)admin 2)owner 3)tenant " +
+                    "4)register as new tenant 5)register as an owner : ");
+            int logTypeNum = 0;
+            boolean flag = false;
+            boolean equalFlag = false;
+
+            while (!flag) {
+                try {
+
+                    logTypeNum = scanner.nextInt();
+
+                    if (logTypeNum > 0 && logTypeNum < 6)
+                        flag = true;
+                    else
+                        System.out.print("the number shouldn't exceed this range (1-5) please try again: ");
+
+
+                } catch (Exception exp) {
+                    System.out.print("Please enter only a number from one to 5: ");
+                    scanner.next();
+                }
+            }
+            if (logTypeNum == 1) { // admin
+                printLogin();
+
+            }
+            if (logTypeNum == 2) { // owner
+                while (true) {
+                printLogin();
+                    for (Owner o : owners) {
+                        if (o.getPassword().equals(main.getPassword()) && o.getUserName().equals(main.getUsername())) {
+                            equalFlag = true;
+                            break;
+                        }
+
+                    }
+                    if (!equalFlag) {
+                        System.out.println("username or password is wrong.");
+                    }
+                    if(equalFlag)break;
+                }
+
+
+
+                ///////////////////////////continue inside owner
+            }
+            if (logTypeNum == 3) { // tenant
+                printLogin();
+
+            }
+
+            if (logTypeNum == 4) { // registration as tenant
+                printRegistration(4, null);
+
+            }
+            if (logTypeNum == 5) { // registration as owner
+                Owner owner = new Owner();
+                printRegistration(5, owner);
+                owners.add(owner);
             }
         }
-        if(logTypeNum==1){ // admin
-            printLogin();
-
-        }
-        if(logTypeNum==2){ // owner
-            printLogin();
-
-        }
-        if(logTypeNum==3){ // tenant
-            printLogin();
-
-        }
-
-        if(logTypeNum==4){ // registration as tenant
-            printRegistration(4,null);
-
-        }
-        if(logTypeNum==5){ // registration as owner
-            Owner owner = new Owner();
-            printRegistration(5,owner);
-            owners.add(owner);
-        }
-        
 
     }
 }
