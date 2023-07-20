@@ -1,4 +1,4 @@
-import java.util.*;
+
 import Owner.*;
 import java.util.*;
 
@@ -65,9 +65,11 @@ public class Main {
         if(registrationType==4){
 
         } else if (registrationType==5) {
-
             owner.setUserName(username);
             owner.setPassword(password);
+
+            System.out.print("please enter your resident & information to contact with you: ");
+            owner.setInformation(scan.nextLine());
         }
 
     }
@@ -127,10 +129,13 @@ public class Main {
                     }
                     if(equalFlag)break;
                 }
+                System.out.println("What do you want to do next?? \n" +
+                        "1)Add housing data 2)view your housing data");
 
 
 
-                ///////////////////////////continue inside owner
+
+
             }
             if (logTypeNum == 3) { // tenant
                 printLogin();
